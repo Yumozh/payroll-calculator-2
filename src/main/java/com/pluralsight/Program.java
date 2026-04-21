@@ -24,10 +24,7 @@ public class Program {
                 double hoursWorked = Double.parseDouble(fields[2].trim());
                 double payRate = Double.parseDouble(fields[3].trim());
 
-                Employee currentEmployee = new Employee(employeeId, name, hoursWorked, payRate);
-                double grossPay = currentEmployee.getGrossPay(currentEmployee.getHoursWorked(), currentEmployee.getPayRate());
-
-                System.out.printf("Employee ID: %d\nEmployee name: %s\nEmployee gross pay: $%.2f\n\n", currentEmployee.getEmployeeId(), currentEmployee.getName(), grossPay);
+                printEmployeeGrossPay(employeeId, name, hoursWorked, payRate);
             }
 
             bufferedReader.close();
@@ -36,5 +33,13 @@ public class Program {
             System.out.println("The file could not be read. Please make sure the file is available and not locked and then try again.");
             e.printStackTrace();
         }
+    }
+
+    private static void printEmployeeGrossPay(int employeeId, String name, double hoursWorked, double payRate) {
+        Employee currentEmployee = new Employee(employeeId, name, hoursWorked, payRate);
+
+        double grossPay = currentEmployee.getGrossPay(currentEmployee.getHoursWorked(), currentEmployee.getPayRate());
+
+        System.out.printf("Employee ID: %d\nEmployee name: %s\nEmployee gross pay: $%.2f\n\n", currentEmployee.getEmployeeId(), currentEmployee.getName(), grossPay);
     }
 }
