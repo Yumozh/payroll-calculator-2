@@ -8,7 +8,10 @@ public class Program {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         System.out.println("Enter the name of the file employee file to process:");
+        String fileToProcess = scan.nextLine();
 
+        System.out.println("Enter the name of the file employee file to process:");
+        String fileToCreate = scan.nextLine();
 
         try {
             FileReader fileReader = new FileReader("employees.csv");
