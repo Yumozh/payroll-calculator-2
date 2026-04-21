@@ -12,11 +12,11 @@ public class Program {
             FileReader fileReader = new FileReader("employees.csv");
             BufferedReader bufferedReader = new BufferedReader(fileReader);
 
+            ignoreHeaderLine(bufferedReader);
             String line = bufferedReader.readLine();
 
             while (line != null) {
 
-                line = bufferedReader.readLine();
                 String[] fields = line.split(Pattern.quote("|"));
 
                 int employeeId = Integer.parseInt(fields[0].trim());
@@ -25,6 +25,8 @@ public class Program {
                 double payRate = Double.parseDouble(fields[3].trim());
 
                 printEmployeeGrossPay(employeeId, name, hoursWorked, payRate);
+
+                line = bufferedReader.readLine();
             }
 
             bufferedReader.close();
@@ -33,6 +35,10 @@ public class Program {
             System.out.println("The file could not be read. Please make sure the file is available and not locked and then try again.");
             e.printStackTrace();
         }
+    }
+
+    private static void ignoreHeaderLine(BufferedReader bufferedReader) throws IOException {
+        bufferedReader.readLine(); //ignore first row because it is a header and not data
     }
 
     private static void printEmployeeGrossPay(int employeeId, String name, double hoursWorked, double payRate) {
