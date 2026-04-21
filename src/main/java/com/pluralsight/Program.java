@@ -1,16 +1,22 @@
 package com.pluralsight;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class Program {
     public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Enter the name of the file employee file to process:");
+
 
         try {
             FileReader fileReader = new FileReader("employees.csv");
             BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            FileWriter fileWriter = new FileWriter("payroll-sept-2023.csv");
+            BufferedWriter bufWriter = new BufferedWriter(fileWriter);
+
 
             ignoreHeaderLine(bufferedReader);
             String line = bufferedReader.readLine();
@@ -19,20 +25,17 @@ public class Program {
 
                 String[] fields = line.split(Pattern.quote("|"));
 
-//                int employeeId = Integer.parseInt(fields[0].trim());
-//                String name = fields[1].trim();
-//                double hoursWorked = Double.parseDouble(fields[2].trim());
-//                double payRate = Double.parseDouble(fields[3].trim());
-
                 Employee currentEmployee = generateEmployeeAndFill(fields);
                 double grossPay = currentEmployee.getGrossPay();
 
-                System.out.printf("Employee ID: %d\nEmployee name: %s\nEmployee gross pay: $%.2f\n\n", currentEmployee.getEmployeeId(), currentEmployee.getName(), grossPay);
+                String text = String.format("Employee ID: %d\nEmployee name: %s\nEmployee gross pay: $%.2f\n\n", currentEmployee.getEmployeeId(), currentEmployee.getName(), grossPay);
+                bufWriter.write(text);
 
                 line = bufferedReader.readLine();
             }
 
             bufferedReader.close();
+            bufWriter.close();
 
         } catch (IOException e) {
             System.out.println("The file could not be read. Please make sure the file is available and not locked and then try again.");
