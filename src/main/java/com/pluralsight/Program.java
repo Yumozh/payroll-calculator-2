@@ -19,12 +19,15 @@ public class Program {
 
                 String[] fields = line.split(Pattern.quote("|"));
 
-                int employeeId = Integer.parseInt(fields[0].trim());
-                String name = fields[1].trim();
-                double hoursWorked = Double.parseDouble(fields[2].trim());
-                double payRate = Double.parseDouble(fields[3].trim());
+//                int employeeId = Integer.parseInt(fields[0].trim());
+//                String name = fields[1].trim();
+//                double hoursWorked = Double.parseDouble(fields[2].trim());
+//                double payRate = Double.parseDouble(fields[3].trim());
 
-                printEmployeeGrossPay(employeeId, name, hoursWorked, payRate);
+                Employee currentEmployee = generateEmployeeAndFill(fields);
+                double grossPay = currentEmployee.getGrossPay();
+
+                System.out.printf("Employee ID: %d\nEmployee name: %s\nEmployee gross pay: $%.2f\n\n", currentEmployee.getEmployeeId(), currentEmployee.getName(), grossPay);
 
                 line = bufferedReader.readLine();
             }
@@ -41,11 +44,13 @@ public class Program {
         bufferedReader.readLine(); //ignore first row because it is a header and not data
     }
 
-    private static void printEmployeeGrossPay(int employeeId, String name, double hoursWorked, double payRate) {
-        Employee currentEmployee = new Employee(employeeId, name, hoursWorked, payRate);
+    private static Employee generateEmployeeAndFill(String[]fields){
+        Employee currentEmployee = new Employee();
 
-        double grossPay = currentEmployee.getGrossPay(currentEmployee.getHoursWorked(), currentEmployee.getPayRate());
-
-        System.out.printf("Employee ID: %d\nEmployee name: %s\nEmployee gross pay: $%.2f\n\n", currentEmployee.getEmployeeId(), currentEmployee.getName(), grossPay);
+        currentEmployee.setEmployeeId(Integer.parseInt(fields[0].trim()));
+        currentEmployee.setName(fields[1].trim());
+        currentEmployee.setHoursWorked(Double.parseDouble(fields[2].trim()));
+        currentEmployee.setPayRate(Double.parseDouble(fields[3].trim()));
+        return currentEmployee;
     }
 }
